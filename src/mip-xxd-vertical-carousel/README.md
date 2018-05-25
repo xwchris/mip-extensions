@@ -6,7 +6,7 @@
 ----|----
 类型|通用
 支持布局|responsive
-所需脚本|https://c.mipcdn.com/static/v1/mip-xxd-vertical-carousel/mip-xxd-vertical-carouseljs
+所需脚本|https://c.mipcdn.com/static/v1/mip-xxd-vertical-carousel/mip-xxd-vertical-carousel.js
 
 ## 示例
 

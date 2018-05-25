@@ -13,18 +13,11 @@
 ### 基本用法
 ```html
 <mip-xxd-logic-form
-    data-api="api.xxx.com"
-    data-redirect="/index.html"
-    data-submitting-text="确认中..."
+    data-api="http://api.xxx.com"
+    data-redirect="http://xxx.com"
+    data-submitting-text="测试中..."
 >
-    <mip-xxd-input-item
-        id="scoreItem"
-        data-item="{title:学习成绩,type:input,key:score,placeholder:百分制}"
-        data-validate="[{type:require,text:请填写学习成绩},{type:range,minValue:0,maxValue:100,text:请填写正确的学习成绩}]"
-    >
-    </mip-xxd-input-item>
-    <button id="submit">submit</button>
-</mip-xxd-login-form>
+</mip-xxd-logic-form>
 ```
 
 ## 属性
