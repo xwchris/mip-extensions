@@ -2,6 +2,12 @@
 
 该组件与`mip-xxd-input-item`配合使用，用来校验表单和提交表单
 
+标题|内容
+----|----
+类型|通用
+支持布局|responsive
+所需脚本|https://c.mipcdn.com/static/v1/mip-xxd-logic-form/mip-xxd-logic-form.js
+
 ## 示例
 
 ### 基本用法

@@ -2,6 +2,12 @@
 
 简单垂直轮播组件
 
+标题|内容
+----|----
+类型|通用
+支持布局|responsive
+所需脚本|https://c.mipcdn.com/static/v1/mip-xxd-vertical-carousel/mip-xxd-vertical-carouseljs
+
 ## 示例
 
 ### 基本用法

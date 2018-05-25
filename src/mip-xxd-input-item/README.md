@@ -2,6 +2,12 @@
 
 该组件为选校帝工具页表单输入框组件，为解决MIP工具页表单交互问题而制作，支持的类型有输入框，下拉框，下拉输入框组合，图形验证码框，短信验证码框等。组件使用的时候需要与`mip-xxd-logic-form`配合使用
 
+标题|内容
+----|----
+类型|通用
+支持布局|responsive
+所需脚本|https://c.mipcdn.com/static/v1/mip-xxd-input-item/mip-xxd-input-item.js
+
 ## 示例
 
 ### 基本用法
