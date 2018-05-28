@@ -69,6 +69,7 @@ define(function (require) {
     function request(element, url, redirect, submitData, paramsData, defaultValue) {
 
         // 提交按钮元素
+        // 由于按钮需要自己定制，该组件只提供提交事件的绑定，故需要使用全局选择器来获取
         var submitElement = document.querySelector('#submit');
         var submitElementText = submitElement.textContent;
         var submittingText = element.dataset.submittingText;
@@ -288,6 +289,7 @@ define(function (require) {
         element.appendChild(tipElement);
     };
 
+    // build说明：绑定展示tip事件，为了正确使用，需要尽早绑定
     customElement.prototype.build = function () {
         var self = this;
         var element = self.element;
