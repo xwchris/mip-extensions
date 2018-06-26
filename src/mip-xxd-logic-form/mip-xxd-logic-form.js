@@ -89,8 +89,8 @@ define(function (require) {
             if (data.status === 0) {
                 submitData.response = data.data;
                 var token = data.token;
-                var redirectUrl = redirect.replace(/#([^#]*)#/g, function ($1, $2) {
-                    return submitData[$2] || defaultValue;
+                var redirectUrl = redirect.replace(/#([^#]*)#/g, function ($0, $1) {
+                    return submitData[$1] || defaultValue;
                 });
 
                 redirectUrl = redirectUrl.replace(/{{(.+?)}}/g, function ($0, $1) {
