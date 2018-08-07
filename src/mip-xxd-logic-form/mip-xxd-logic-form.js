@@ -293,7 +293,7 @@ define(function (require) {
             onSubmit(element);
         });
 
-        [].slice.call(document.querySelectorAll('.record-btn')).forEach(function (recordElement) {
+        var bindRecordBtnEvent = function (recordElement) {
             recordElement.addEventListener('click', function () {
                 var inputs = element.querySelectorAll('mip-xxd-input-item');
                 var result = Array.prototype.every.call(inputs, function (input) {
@@ -331,7 +331,9 @@ define(function (require) {
 
                 window.location = redirectUrl;
             });
-        });
+        };
+
+        [].slice.call(document.querySelectorAll('.record-btn')).forEach(bindRecordBtnEvent);
 
         var tipElement = createTipElement();
         element.appendChild(tipElement);
