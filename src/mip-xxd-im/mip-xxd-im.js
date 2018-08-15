@@ -17,7 +17,7 @@ define(function (require) {
         self.element.addEventListener('click', function () {
             window.cambrian && window.cambrian.invokeIM({
                 fail: function () {
-                    window.location = redirect;
+                    window.top.location.href = redirect;
                 }
             });
         });

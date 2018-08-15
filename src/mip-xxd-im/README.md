@@ -1,6 +1,6 @@
 # mip-xxd-im
 
-mip-xxd-im 组件说明
+该组件用于配合熊掌号jssdk调用IM组件
 
 标题|内容
 ----|----
@@ -13,7 +13,7 @@ mip-xxd-im 组件说明
 ### 基本用法
 ```html
 <mip-xxd-im data-redirect="xxx.com">
-    嵌套其他需要调用im能力的元素
+    嵌套其他需要调用im功能的元素
 </mip-xxd-im>
 ```
 
