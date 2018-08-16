@@ -13,7 +13,7 @@ define(function (require) {
      */
     customElement.prototype.firstInviewCallback = function () {
         var self = this;
-        var redirect = encodeURIComponent(self.element.dataset.redirect || '/');
+        var redirect = self.element.dataset.redirect || '/';
         self.element.addEventListener('click', function () {
             window.cambrian && window.cambrian.invokeIM({
                 fail: function () {
