@@ -15,7 +15,7 @@ define(function (require) {
         var self = this;
         var redirect = self.element.dataset.redirect || '/';
         self.element.addEventListener('click', function () {
-            window.cambrian && window.cambrian.invokeIM({
+            window.cambrian && window.cambrian.invokeBcpIM({
                 fail: function () {
                     window.top.location.href = redirect;
                 }
