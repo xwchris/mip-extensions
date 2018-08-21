@@ -42,9 +42,9 @@ mip-xxd-set-cookie 组件说明
 ### data-domain
 
 说明：cookie的域
-必选项：是
+必选项：否
 类型：string
-默认值：''
+默认值：当前域名
 
 ### data-path
 
