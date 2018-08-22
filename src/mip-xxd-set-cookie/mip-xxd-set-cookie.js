@@ -6,7 +6,7 @@
 define(function (require) {
     'use strict';
 
-    const customElement = require('customElement').create();
+    var customElement = require('customElement').create();
 
      /**
      * 获取cookie设置函数
@@ -19,8 +19,8 @@ define(function (require) {
      */
     function getCookieFunc(prefix, domain, path) {
 
-        return function (key, value, maxAge = -1) {
-            let cookie = prefix + key + '=' + encodeURIComponent(value) + ';path=' + path;
+        return function (key, value, maxAge) {
+            var cookie = prefix + key + '=' + encodeURIComponent(value) + ';path=' + path;
 
             if (domain) {
                 cookie += ';domain=' + domain;
@@ -36,13 +36,13 @@ define(function (require) {
      * 第一次进入可视区回调，只会执行一次
      */
     customElement.prototype.firstInviewCallback = function () {
-        const self = this;
-        const cookies = self.element.dataset.cookies || '[]';
-        const prefix = self.element.dataset.prefix || '';
-        const domain = self.element.dataset.domain || '';
-        const path = self.element.dataset.path || '/';
-        const setCookie = getCookieFunc(prefix, domain, path);
-        const arr = JSON.parse(cookies) || [];
+        var self = this;
+        var cookies = self.element.dataset.cookies || '[]';
+        var prefix = self.element.dataset.prefix || '';
+        var domain = self.element.dataset.domain || '';
+        var path = self.element.dataset.path || '/';
+        var setCookie = getCookieFunc(prefix, domain, path);
+        var arr = JSON.parse(cookies) || [];
         arr.map(function (cookie) {
             setCookie(cookie.name, cookie.value, cookie.maxAge || -1);
         });
