@@ -32,8 +32,9 @@ define(function (require) {
      * @param {number} destPosition 目标位置
      * @param {number} interval 持续时间
      * @param {dom} dom 要滚动的元素
+     * @param {Function} cancelFunc 用来判断是否应该取消滚动
      */
-    function scrollTo(destPosition, interval, dom) {
+    function scrollTo(destPosition, interval, dom, cancelFunc) {
         var ease = function (t) {
             return 0.5 - Math.cos(t * Math.PI) / 2;
         };
@@ -46,16 +47,44 @@ define(function (require) {
 
         var time = 0;
         var currentPosition = dom.scrollLeft;
-        var intervalObj = setInterval(function () {
-            if (time > duration) {
-                dom.scrollTo(destPosition, 0);
-                clearInterval(intervalObj);
-                return;
-            }
+        var intervalObj = null;
 
-            time += 10;
-            dom.scrollTo(currentPosition + (destPosition - currentPosition) * ease(time / duration), 0);
-        }, 10);
+        if (requestAnimationFrame) {
+            var scrollCb = function () {
+                if (time > duration) {
+                    dom.scrollTo(destPosition, 0);
+                    cancelAnimationFrame(intervalObj);
+                    return;
+                }
+
+                if (cancelFunc()) {
+                    cancelAnimationFrame(intervalObj);
+                    return;
+                }
+
+                time += 10;
+                dom.scrollTo(currentPosition + (destPosition - currentPosition) * ease(time / duration), 0);
+                intervalObj = requestAnimationFrame(scrollCb);
+            };
+            intervalObj = requestAnimationFrame(scrollCb);
+        }
+        else {
+            intervalObj = setInterval(function () {
+                if (time > duration) {
+                    dom.scrollTo(destPosition, 0);
+                    clearInterval(intervalObj);
+                    return;
+                }
+
+                if (cancelFunc()) {
+                    clearInterval(intervalObj);
+                    return;
+                }
+
+                time += 10;
+                dom.scrollTo(currentPosition + (destPosition - currentPosition) * ease(time / duration), 0);
+            }, 10);
+        }
     }
 
      /**
@@ -74,10 +103,10 @@ define(function (require) {
             var currentPosition = dom.scrollLeft;
             clearInterval(interval);
             interval = setTimeout(function () {
-                if (savedPosition === currentPosition) {
+                if (savedPosition === currentPosition && !dom.isTouched) {
                     cb(dom);
                 }
-            }, 100);
+            }, 200);
             savedPosition = currentPosition;
         };
     }
@@ -123,8 +152,9 @@ define(function (require) {
         var childWidth = getChildItemWidth(children);
 
         scrollBox.isTouched = false;
+        var isScrolling = false;
 
-        scrollBox.addEventListener('scroll', onListenScrollEnd(scrollBox, function (dom) {
+        var scrollCallback = onListenScrollEnd(scrollBox, function (dom) {
             var element = dom;
             var currentPosition = element.scrollLeft || 0;
 
@@ -132,10 +162,28 @@ define(function (require) {
 
             var targetPosition = currentIndex * childWidth;
 
-            scrollTo(targetPosition, 300, element);
+            var cancelFunc = function () {
+                return !isScrolling;
+            };
+
+            scrollTo(targetPosition, 150, element, cancelFunc);
 
             setCurrentIndex(dotsList, currentIndex);
-        }));
+        });
+
+        scrollBox.addEventListener('touchstart', function () {
+            scrollBox.isTouched = true;
+        });
+
+        scrollBox.addEventListener('touchend', function () {
+            scrollBox.isTouched = false;
+            scrollCallback();
+        });
+
+        scrollBox.addEventListener('scroll', function () {
+            isScrolling = true;
+            scrollCallback();
+        });
 
         util.dom.insert(scrollBox, children);
         hideBox.appendChild(scrollBox);
