@@ -83,8 +83,7 @@ define(function (require) {
         // jsonp
         fetchJsonp(handleUrl(url, paramsData), {
             jsonpCallback: 'callback',
-            timeout: 10000,
-            // withCredentials: true,
+            timeout: 10000
         }).then(function (res) {
             return res.json();
         }).then(function (data) {
@@ -190,9 +189,10 @@ define(function (require) {
         // 判断是否需要百度授权登录
         var loginEleId = element.dataset.loginId || '';
 
-        if (!loginEleId || element.extraData.flag) {
+        if (!loginEleId || element.extraData.sessionId) {
             onRedirect.call(element, data);
-        } else {
+        }
+        else {
             var loginEle = document.getElementById(loginEleId);
             viewer.eventAction.execute('login', loginEle, event);
         }
@@ -279,6 +279,7 @@ define(function (require) {
      * 读取localStorage
      *
      * @param {string} key 要读取的key
+     * @return {string} 存储的值
      */
     function readStorage(key) {
         var result = '';
@@ -336,7 +337,6 @@ define(function (require) {
                 }
 
                 var data = {};
-                var inputs = element.querySelectorAll('mip-xxd-input-item');
                 Array.prototype.forEach.call(inputs, function (child) {
                     var key = child.dataset.key;
                     var value = child.dataset.value;
@@ -378,12 +378,10 @@ define(function (require) {
 
         // 记录登录后的额外信息
         element.extraData = {};
-        self.addEventAction('saveData', function (event) {
-            var extraData = {
-                sessionId: readStorage('sessionId'),
-                openId: event.openId,
-                flag: event.flag
-            }
+        self.addEventAction('saveData', function () {
+            var info = JSON.parse(element.dataset.info || '{}');
+            var sessionStorageId = element.dataset.sessionStorageId;
+            var extraData = Object.assign({}, info, {sessionId: readStorage(sessionStorageId)});
             element.extraData = extraData;
             onSubmit(element, event);
         });
