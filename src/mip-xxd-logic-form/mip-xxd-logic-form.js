@@ -378,11 +378,13 @@ define(function (require) {
         // 记录登录后的额外信息
         element.extraData = {};
         self.addEventAction('saveData', function () {
-            var info = JSON.parse(element.dataset.info || '{}');
-            var sessionStorageId = element.dataset.sessionStorageId;
-            var extraData = Object.assign({}, info, {sessionId: readStorage(sessionStorageId)});
-            element.extraData = extraData;
-            onSubmit(element, event);
+            setTimeout(function() {
+                var info = JSON.parse(element.dataset.info || '{}');
+                var sessionStorageId = element.dataset.sessionStorageId;
+                var extraData = Object.assign({}, { isLogin: !!info.isLogin }, info.userInfo || {}, {sessionId: readStorage(sessionStorageId)});
+                element.extraData = extraData;
+                onSubmit(element, event);
+            });
         });
     };
 
