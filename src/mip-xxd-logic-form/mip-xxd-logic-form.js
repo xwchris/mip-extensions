@@ -187,14 +187,13 @@ define(function (require) {
         }
 
         // 判断是否需要百度授权登录
-        var loginEleId = element.dataset.loginId || '';
+        var xzhAuth = !!element.dataset.xzhAuth || false;
 
-        if (!loginEleId || element.extraData.sessionId) {
+        if (!xzhAuth || element.extraData.isLogin) {
             onRedirect.call(element, data);
         }
         else {
-            var loginEle = document.getElementById(loginEleId);
-            viewer.eventAction.execute('login', loginEle, event);
+            viewer.eventAction.execute('login', element, event);
         }
     }
 
